@@ -1,10 +1,8 @@
-# Getting Started with Create React App
+# Mango Defi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+**create a enpoint for the app with local host
+    ngrok http http://localhost:3000
+docs:     https://ngrok.com/docs/getting-started/
 
 ### `npm start`
 
