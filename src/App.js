@@ -1,8 +1,5 @@
 import MangoLogo from './imgs/Mango.png';
-
 import { Navbar, Container, Button,Card, Form, Row, Col}from 'react-bootstrap';
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -19,7 +16,7 @@ function App() {
             height="50"
           />
           <div className="ml-auto">
-            <Button variant="primary">Connect Wallet</Button>
+            <Button variant="primary">connectWallet</Button>
           </div>
         </Container>
       </Navbar>
