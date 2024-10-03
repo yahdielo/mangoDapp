@@ -1,10 +1,12 @@
 import MangoLogo from './imgs/Mango.png';
 import { Navbar, Container, Button,Card, Form, Row, Col}from 'react-bootstrap';
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
   return (
+    <ThirdwebProvider desireChainId={ChainId.Base}>
     <div className="App"> 
     {/* Header*/}
       <Navbar bg="light" expand="lg" 
@@ -43,6 +45,7 @@ function App() {
       </Container>
       </div>
     </div>
+    </ThirdwebProvider>
   );
 }
 
