@@ -1,12 +1,23 @@
 import MangoLogo from './imgs/Mango.png';
 import { Navbar, Container, Button,Card, Form, Row, Col}from 'react-bootstrap';
-import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
+import { 
+      ChainId,
+      connectButton,
+      ThirdwebProvider,
+      metamaskWallet,
+      coinbaseWallet,
+      walletConnect } 
+    from "@thirdweb-dev/react";
+//import ConnectWalletButton from './components/connectButton'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import{Client} from './client'
 
+//client
+const _client = Client
 function App() {
   return (
-    <ThirdwebProvider desireChainId={ChainId.Base}>
+    <ThirdwebProvider>
     <div className="App"> 
     {/* Header*/}
       <Navbar bg="light" expand="lg" 
@@ -18,11 +29,12 @@ function App() {
             height="50"
           />
           <div className="ml-auto">
-            <Button variant="primary">connectWallet</Button>
+            <connectButton client={_client} />
           </div>
         </Container>
       </Navbar>
        {/* Centered Box */}
+       
        <div className="Body" expand="lg"
         style={{
           background: 'linear-gradient(150deg, orange, yellow, green)',  // Gradient background

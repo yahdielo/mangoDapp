@@ -12,6 +12,7 @@ module.exports = function override(config, env) {
         stream: require.resolve('stream-browserify'),
         zlib: false,
         'process/browser': require.resolve("process/browser.js"),
+        path: require.resolve("path-browserify")
     };
     //config.resolve.fallback = fallback;
     config.plugins = (config.plugins || []).concat([
