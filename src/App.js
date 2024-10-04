@@ -1,14 +1,31 @@
 import MangoLogo from './imgs/Mango.png';
 import { Navbar, Container, Button,Card, Form, Row, Col}from 'react-bootstrap';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Importing react-query provider
+import { 
+      ChainId,
+      ConnectWallet, 
+      Web3Button,
+      ThirdwebProvider,
+      metamaskWallet,
+      coinbaseWallet,
+      walletConnect} 
+    from "@thirdweb-dev/react";
+import{Client} from './client'
+//import ConnectWalletButton from './components/connectButton'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+//client
+const _client = Client
+// Create a QueryClient instance
+const queryClient = new QueryClient();
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
+    <ThirdwebProvider>
     <div className="App"> 
     {/* Header*/}
-      <Navbar bg="light" expand="lg" 
-        >
+      <Navbar bg="light" expand="lg">
         <Container> 
           <img
             src={MangoLogo}
@@ -16,11 +33,12 @@ function App() {
             height="50"
           />
           <div className="ml-auto">
-            <Button variant="primary">connectWallet</Button>
+           <ConnectWallet client={_client} />
           </div>
         </Container>
       </Navbar>
        {/* Centered Box */}
+       
        <div className="Body" expand="lg"
         style={{
           background: 'linear-gradient(150deg,orange, yellow, green)',  // Gradient background
@@ -43,6 +61,8 @@ function App() {
       </Container>
       </div>
     </div>
+    </ThirdwebProvider>
+    </QueryClientProvider>
   );
 }
 
