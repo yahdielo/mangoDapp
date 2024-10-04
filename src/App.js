@@ -23,7 +23,7 @@ function App() {
        {/* Centered Box */}
        <div className="Body" expand="lg"
         style={{
-          background: 'linear-gradient(150deg, orange, yellow, green)',  // Gradient background
+          background: 'linear-gradient(150deg,orange, yellow, green)',  // Gradient background
         }}> 
        <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
         <Card style={{ width: '24rem' }} className="p-4 shadow">
