@@ -11,6 +11,7 @@ fixing Webpack 5 Breaking Changes "process/browser":
 Resolve polly fills webpack5< error
         https://stackoverflow.com/questions/67348426/how-fix-breaking-change-webpack-5-used-to-include-polyfills-for-node-js-core
 
+
 Reacts missing queryClient error fix
 - dow grading stan stack version to 4
 
