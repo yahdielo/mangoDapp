@@ -1,5 +1,4 @@
 import MangoLogo from './imgs/Mango.png';
-import { Navbar, Container, Button,Card, Form, Row, Col}from 'react-bootstrap';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Importing react-query provider
 import { 
       ThirdwebProvider,
@@ -36,7 +35,6 @@ function App() {
         </Container>
       </Navbar>
        {/* Centered Box */}
-       
        <div className="Body" expand="lg"
         style={{
           background: 'linear-gradient(150deg,orange, yellow, green)',  // Gradient background
