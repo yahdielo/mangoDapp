@@ -1,13 +1,12 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
-import "../index.css";
 import { useState } from 'react';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
 
 // Mock list of tokens
 const tokens = [
-    { symbol: 'ETH', name: 'Ethereum', address: '0x...', image: ethLogo },
-    { symbol: 'USDC', name: 'USD Coin', address: '0x...', image: usdcLogo },
+    { symbol: 'ETH', name: 'Ethereum', address: '0xEthAddress', image: ethLogo },
+    { symbol: 'USDC', name: 'USD Coin', address: '0xUsdcAddress', image: usdcLogo },
     // Add more tokens as needed
 ];
 
@@ -28,6 +27,22 @@ const SwapBox = () => {
         setShowModal(false);
     };
 
+    const handleAmount1Change = (e) => {
+        setAmount1(e.target.value);
+    };
+
+    const handleAmount2Change = (e) => {
+        setAmount2(e.target.value);
+    };
+
+    // Handle the swap action
+    const handleSwap = () => {
+        console.log(`Amount in box 1: ${amount1}`);
+        console.log(`Selected token 1: ${selectedToken1.symbol}, Address: ${selectedToken1.address}`);
+        console.log(`Amount in box 2: ${amount2}`);
+        console.log(`Selected token 2: ${selectedToken2.symbol}, Address: ${selectedToken2.address}`);
+    };
+
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
             <Card style={{ width: '30rem', padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
@@ -40,10 +55,9 @@ const SwapBox = () => {
                                     type="text"
                                     placeholder="Enter amount"
                                     value={amount1}
-                                    onChange={(e) => setAmount1(e.target.value)}
+                                    onChange={handleAmount1Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
-                                {/*Token selection popUp Box 1*/}
                                 <Button
                                     variant="outline-secondary"
                                     onClick={() => { setIsSelectingToken1(true); setShowModal(true); }}
@@ -53,9 +67,9 @@ const SwapBox = () => {
                                         src={selectedToken1.image}
                                         alt={selectedToken1.symbol}
                                         roundedCircle
-                                        style={{ width: '24px', height: '24px', marginRight: '5px' }} // Adjusted margin
+                                        style={{ width: '24px', height: '24px', marginRight: '5px' }}
                                     />
-                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span> {/* Reduced font size */}
+                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span>
                                 </Button>
                             </div>
                         </Form.Group>
@@ -67,7 +81,7 @@ const SwapBox = () => {
                                     type="text"
                                     placeholder="Enter amount"
                                     value={amount2}
-                                    onChange={(e) => setAmount2(e.target.value)}
+                                    onChange={handleAmount2Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
                                 <Button
@@ -79,9 +93,9 @@ const SwapBox = () => {
                                         src={selectedToken2.image}
                                         alt={selectedToken2.symbol}
                                         roundedCircle
-                                        style={{ width: '24px', height: '24px', marginRight: '5px' }} // Adjusted margin
+                                        style={{ width: '24px', height: '24px', marginRight: '5px' }}
                                     />
-                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken2.symbol}</span> {/* Reduced font size */}
+                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken2.symbol}</span>
                                 </Button>
                             </div>
                         </Form.Group>
@@ -91,6 +105,7 @@ const SwapBox = () => {
                             variant="primary"
                             className="w-100"
                             style={{ padding: '1rem', fontSize: '1.5rem' }}
+                            onClick={handleSwap} // Added onClick event to handle swap
                         >
                             Swap
                         </Button>
