@@ -6,6 +6,7 @@ import {
       walletConnect,
     } 
     from "@thirdweb-dev/react";
+import { Container,Navbar} from 'react-bootstrap';
 import SwapBox from "./components/swapBox.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
