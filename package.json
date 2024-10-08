@@ -1,5 +1,6 @@
 {
   "name": "mango",
+  "homepage":"https://yahdielo.github.io/Mango/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +29,8 @@
     "v4": "^0.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b main -d build",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
