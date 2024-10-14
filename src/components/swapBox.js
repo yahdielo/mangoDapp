@@ -1,7 +1,10 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Mock list of tokens
 const tokens = [
@@ -13,10 +16,13 @@ const tokens = [
 const SwapBox = () => {
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
+    const [tokenList, setTokenList] = useState([]);
     const [selectedToken1, setSelectedToken1] = useState(tokens[0]);
     const [selectedToken2, setSelectedToken2] = useState(tokens[1]);
     const [showModal, setShowModal] = useState(false);
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
+
+    
 
     const handleTokenSelect = (token) => {
         if (isSelectingToken1) {
@@ -119,7 +125,7 @@ const SwapBox = () => {
                     <Modal.Title>Select a Token</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ListGroup>
+                <ListGroup>
                         {tokens.map((token) => (
                             <ListGroup.Item key={token.address} action onClick={() => handleTokenSelect(token)}>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>

@@ -2,8 +2,11 @@ import MangoLogo from './imgs/Mango.png';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Importing react-query provider
 import { 
       ThirdwebProvider,
+      ChainId,
       ConnectWallet,
-      walletConnect,
+      metamaskWallet,
+      coinbaseWallet,
+      walletConnect
     } 
     from "@thirdweb-dev/react";
 import { Container,Navbar} from 'react-bootstrap';
@@ -13,13 +16,13 @@ import './App.css';
 
 // Create a QueryClient instance
 const queryClient = new QueryClient();
-
+//const metamaskConfig = metamaskWallet();
 function App() {
   return (
     //wrapping the app on the @tanstack/react-query
     //also wrapping the react components in the thirdweb cli
     <QueryClientProvider client={queryClient}>
-    <ThirdwebProvider supportedWallets={[walletConnect()]}>
+    <ThirdwebProvider desiredChainId={ChainId.Base} supportedWallets={[walletConnect(),metamaskWallet()]}>
       
     <div className="App"> 
     {/* Header*/}
