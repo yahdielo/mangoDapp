@@ -1,5 +1,6 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
+import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
 import dotenv from 'dotenv';
@@ -40,27 +41,20 @@ const SwapBox = () => {
         setAmount2(e.target.value);
     };
 
+
     const handleBlur = async () => {
-        /**@DEV on blur will use the 0x api to fetch token price  */
-        if(amount1 !== 0 && selectedToken1 !== "" && selectedToken2!== ""){
-            
-            const params = { 
-                chainId:8453,
-                buyToken: selectedToken2.address,
-                sellToken:selectedToken1.address,
-                sellAmount:amount1 * 10 ** tokens[0].decimals
+            const sellTokenAddress = selectedToken1.address;
+            const buyTokenAddress = selectedToken2.address;
+            try{
+                const resp = await axios.post(
+                    `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amount1}`
+                    );
+                console.log('resp',resp);
+            }catch(e){
+                console.log(e);
             }
-            const options = {
-                method: 'GET',
-                headers: {
-                  '0x-api-key': '4e9e7dbc-c91a-4e75-9f76-3dad20902ba4',
-                  '0x-version': 'v2'
-                }
-              };
-            const resp = await fetch('https://api.0x.org/swap/permit2/quote?chainId=8453&sellToken=0x4200000000000000000000000000000000000006&buyToken=0x776aAef8D8760129A0398CF8674EE28cefc0EAb9&sellAmount=1000000000000000000&taker=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',options);
-            console.log(resp);
+            
         }
-    }
     // Handle the swap action
     const handleSwap = () => {
         console.log(`Amount in box 1: ${amount1}`);
@@ -82,7 +76,7 @@ const SwapBox = () => {
                                     placeholder="Enter amount"
                                     value={amount1}
                                     onChange={handleAmount1Change}
-                                    onBlur={handleBlur}
+                                    onBlur={handleBlur} ///
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
                                 <Button
