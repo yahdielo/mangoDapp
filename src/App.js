@@ -18,6 +18,7 @@ import './App.css';
 const queryClient = new QueryClient();
 //const metamaskConfig = metamaskWallet();
 function App() {
+  
   return (
     //wrapping the app on the @tanstack/react-query
     //also wrapping the react components in the thirdweb cli

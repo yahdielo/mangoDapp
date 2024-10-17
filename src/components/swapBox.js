@@ -49,7 +49,7 @@ const SwapBox = () => {
                 const resp = await axios.post(
                     `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amount1}`
                     );
-                console.log('resp',resp);
+                console.log('in dapp resp',resp);
             }catch(e){
                 console.log(e);
             }
