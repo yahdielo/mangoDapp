@@ -1,5 +1,6 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
+//import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
@@ -11,6 +12,7 @@ dotenv.config();
 const tokens = [
     { symbol: 'WETH', name: 'Ethereum', address: '0x4200000000000000000000000000000000000006',decimals:18, image: ethLogo },
     { symbol: 'USDC', name: 'USD Coin', address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',decimals:6, image: usdcLogo },
+    {symbol:'Brett', name:'BRETT',address:'0x532f27101965dd16442E59d40670FaF5eBB142E4',decimals:18}
     // Add more tokens as needed
 ];
 
@@ -40,20 +42,39 @@ const SwapBox = () => {
     const handleAmount2Change = (e) => {
         setAmount2(e.target.value);
     };
+    //call back funciton pass amountToken out 
+    //from child component to parent component
+    const handleAmountOutUpdate = (amountOut) => {
+        console.log('in call back')
+        handleAmount2Change(amountOut);
+    }
+    /** @DEV function fetches amount out from the 0x api */
+const fetchAmountOut = async (sellTokenAddress,buyTokenAddress,amountToSell) => {
+    try{
+        const resp = await axios.post(
+            `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amountToSell}`
+            );
+            console.log('logg from swapBox frtch amount',resp)
+        return resp;
+    }catch(e){
+        console.log('\n\nERR: FetchAmount component->>>>\n',e);
+    }
+
+}
 
 
+    //@DEV: handle blur will call fetchToken info
+    //to get the amount out tokens user will get after the swap
     const handleBlur = async () => {
-            const sellTokenAddress = selectedToken1.address;
-            const buyTokenAddress = selectedToken2.address;
-            try{
-                const resp = await axios.post(
-                    `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amount1}`
-                    );
-                console.log('in dapp resp',resp);
-            }catch(e){
-                console.log(e);
+            console.log('hadle blur')
+            if(amount1 !== ""){
+                const sellTokenAddress = selectedToken1.address;
+                const buyTokenAddress = selectedToken2.address;
+                const amountToSell = amount1*10**selectedToken2.decimals;
+                const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
+                console.log('resposne from handle blur',resp);
+
             }
-            
         }
     // Handle the swap action
     const handleSwap = () => {
