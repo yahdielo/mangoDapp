@@ -4,6 +4,7 @@ import { useEffect,useState } from 'react';
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
+import {ethers} from 'ethers';
 import dotenv from 'dotenv';
 const qs = require('qs')
 dotenv.config();
@@ -23,6 +24,7 @@ const SwapBox = () => {
     const [selectedToken1, setSelectedToken1] = useState(tokens[0]);
     const [selectedToken2, setSelectedToken2] = useState(tokens[1]);
     const [showModal, setShowModal] = useState(false);
+    const [outPutAmount,setOutputAmount] = useState('Enter Amount');
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
 
 
@@ -49,31 +51,30 @@ const SwapBox = () => {
         handleAmount2Change(amountOut);
     }
     /** @DEV function fetches amount out from the 0x api */
-const fetchAmountOut = async (sellTokenAddress,buyTokenAddress,amountToSell) => {
-    try{
-        const resp = await axios.post(
-            `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amountToSell}`
-            );
-            console.log('logg from swapBox frtch amount',resp)
-        return resp;
-    }catch(e){
-        console.log('\n\nERR: FetchAmount component->>>>\n',e);
+    const fetchAmountOut = async (sellTokenAddress,buyTokenAddress,amountToSell) => {
+        try{
+            const resp = await axios.post(
+                `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amountToSell}`
+                );
+                console.log('logg from swapBox frtch amount',resp)
+            return resp;
+        }catch(e){
+            console.log('\n\nERR: fetchAmount()\n',e);
+        }
+
     }
-
-}
-
-
     //@DEV: handle blur will call fetchToken info
     //to get the amount out tokens user will get after the swap
     const handleBlur = async () => {
-            console.log('hadle blur')
+    
             if(amount1 !== ""){
                 const sellTokenAddress = selectedToken1.address;
                 const buyTokenAddress = selectedToken2.address;
-                const amountToSell = amount1*10**selectedToken2.decimals;
+                const amountToSell = amount1*10**selectedToken1.decimals;
                 const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
-                console.log('resposne from handle blur',resp);
-
+                const amountBack = resp.data.buyAmount /(10**selectedToken2.decimals)
+            
+                setOutputAmount(amountBack);
             }
         }
     // Handle the swap action
@@ -121,7 +122,7 @@ const fetchAmountOut = async (sellTokenAddress,buyTokenAddress,amountToSell) => 
                             <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Enter amount"
+                                    placeholder={`${outPutAmount}`}
                                     value={amount2}
                                     onChange={handleAmount2Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
