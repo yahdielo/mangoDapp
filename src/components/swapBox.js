@@ -59,7 +59,7 @@ const SwapBox = () => {
                 console.log('logg from swapBox frtch amount',resp)
             return resp;
         }catch(e){
-            console.log('\n\nERR: fetchAmount()\n',e);
+            console.log('\n\nERR: fetchAmountOut()\n',e);
         }
 
     }
@@ -72,11 +72,13 @@ const SwapBox = () => {
                 const buyTokenAddress = selectedToken2.address;
                 const amountToSell = amount1*10**selectedToken1.decimals;
                 const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
-                const amountBack = resp.data.buyAmount /(10**selectedToken2.decimals)
+                console.log('resp from handle burl', resp);
+                const amountBack = resp.data.buyAmount /(10**selectedToken2.decimals)//make it human readable
             
                 setOutputAmount(amountBack);
             }
         }
+
     // Handle the swap action
     const handleSwap = () => {
         console.log(`Amount in box 1: ${amount1}`);
