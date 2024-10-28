@@ -1,5 +1,9 @@
 # Mango Defi
 
+Mango defi is a telegram mini app intender to facilitate user to swap token via telegram chat.
+this is the next generation of telegram bots, for swapping cryptos as in non custodial, and user control their funds at all times.
+
+
 **create a enpoint for the app with local host
     ngrok http http://localhost:3000
 docs:     https://ngrok.com/docs/getting-started/
