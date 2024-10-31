@@ -56,7 +56,7 @@ const SwapBox = () => {
             const resp = await axios.post(
                 `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amountToSell}`
                 );
-                console.log('logg from swapBox frtch amount',resp)
+                console.log('logg from swapBox fetchAMount()',resp)
             return resp;
         }catch(e){
             console.log('\n\nERR: fetchAmount()\n',e);
