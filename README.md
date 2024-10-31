@@ -21,3 +21,4 @@ Reacts missing queryClient error fix
 
     https://github.com/thirdweb-dev/dashboard/issues/2084
     https://stackoverflow.com/questions/65590195/error-no-queryclient-set-use-queryclientprovider-to-set-one
+
