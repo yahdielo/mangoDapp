@@ -12,7 +12,7 @@ import Header from "./components/header.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-// Create a QueryClient instance 
+// Create a QueryClient instance  
 const queryClient = new QueryClient();
 //const metamaskConfig = metamaskWallet();
 function App() {
@@ -29,7 +29,7 @@ function App() {
        {/* Centered Box */}
        <div className="Body" expand="lg"
         style={{
-          background: 'linear-gradient(150deg,red,orange, yellow, green)', // Gradient background
+          background: 'linear-gradient(150deg,orange, yellow, green)',  // Gradient background
         }}> 
         <SwapBox/>
       </div>

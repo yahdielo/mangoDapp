@@ -60,7 +60,7 @@ const SwapBox = () => {
                 console.log('logg from swapBox frtch amount',resp)
             return resp.data;
         }catch(e){
-            console.log('\n\nERR: fetchAmount()-> swapBox component\n',e)
+            console.log('\n\nERR: fetchAmount()-> swapBox component\n',e);
         }
 
     }
@@ -72,13 +72,13 @@ const SwapBox = () => {
                 const sellTokenAddress = selectedToken1.address;
                 const buyTokenAddress = selectedToken2.address;
                 const amountToSell = amount1*10**selectedToken1.decimals;
-                const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell)
+                const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
                 console.log('resp',resp)
                 const amountBack = resp.buyAmount /(10**selectedToken2.decimals)
+            
                 setOutputAmount(amountBack);
             }
         }
-
     // Handle the swap action
     const handleSwap = () => {
         console.log(`Amount in box 1: ${amount1}`);
