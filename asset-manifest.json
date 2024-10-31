@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Mango/static/css/main.29220e28.css",
-    "main.js": "/Mango/static/js/main.7ed8116b.js",
+    "main.js": "/Mango/static/js/main.5f0d5196.js",
     "static/js/9619.66f59fd7.chunk.js": "/Mango/static/js/9619.66f59fd7.chunk.js",
     "static/js/6979.f99c05ee.chunk.js": "/Mango/static/js/6979.f99c05ee.chunk.js",
     "static/js/9435.343740a0.chunk.js": "/Mango/static/js/9435.343740a0.chunk.js",
@@ -132,7 +132,7 @@
     "static/media/eth.png": "/Mango/static/media/eth.c0d7e98bb1edf2e7202b.png",
     "index.html": "/Mango/index.html",
     "main.29220e28.css.map": "/Mango/static/css/main.29220e28.css.map",
-    "main.7ed8116b.js.map": "/Mango/static/js/main.7ed8116b.js.map",
+    "main.5f0d5196.js.map": "/Mango/static/js/main.5f0d5196.js.map",
     "9619.66f59fd7.chunk.js.map": "/Mango/static/js/9619.66f59fd7.chunk.js.map",
     "6979.f99c05ee.chunk.js.map": "/Mango/static/js/6979.f99c05ee.chunk.js.map",
     "9435.343740a0.chunk.js.map": "/Mango/static/js/9435.343740a0.chunk.js.map",
@@ -238,6 +238,6 @@
   },
   "entrypoints": [
     "static/css/main.29220e28.css",
-    "static/js/main.7ed8116b.js"
+    "static/js/main.5f0d5196.js"
   ]
 }
