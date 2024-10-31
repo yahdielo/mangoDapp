@@ -29,7 +29,7 @@ function App() {
        {/* Centered Box */}
        <div className="Body" expand="lg"
         style={{
-          background: 'linear-gradient(150deg,red,orange, yellow, green)',  // Gradient background
+          background: 'linear-gradient(150deg,red,orange, yellow, green)', // Gradient background
         }}> 
         <SwapBox/>
       </div>
