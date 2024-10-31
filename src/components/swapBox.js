@@ -1,5 +1,6 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
+import { useConnectionStatus,ConnectWallet } from "@thirdweb-dev/react";
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
@@ -27,6 +28,7 @@ const SwapBox = () => {
     const [outPutAmount,setOutputAmount] = useState('Enter Amount');
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
 
+    const connectionStatus = useConnectionStatus();
 
     const handleTokenSelect = (token) => {
         if (isSelectingToken1) {
@@ -146,14 +148,19 @@ const SwapBox = () => {
                         </Form.Group>
 
                         {/* Swap Button */}
-                        <Button
-                            variant="primary"
-                            className="w-100"
-                            style={{ padding: '1rem', fontSize: '1.5rem' }}
-                            onClick={handleSwap} // Added onClick event to handle swap
-                        >
-                            Swap
-                        </Button>
+                        
+                        {connectionStatus == "connected" ? (
+                            <Button
+                                variant="primary"
+                                className="w-100"
+                                style={{ padding: '1rem', fontSize: '1.5rem' }}
+                                onClick={handleSwap}
+                            >
+                                Swap
+                            </Button>
+                        ) : (
+                            <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
+                        )}
                     </Form>
                 </Card.Body>
             </Card>
