@@ -42,12 +42,13 @@ const SwapBox = () => {
     };
 
     const handleAmount2Change = (e) => {
+        console.log('handle onchange 2',e)
         setAmount2(e.target.value);
     };
     //call back funciton pass amountToken out 
     //from child component to parent component
     const handleAmountOutUpdate = (amountOut) => {
-        console.log('in call back')
+      
         handleAmount2Change(amountOut);
     }
     /** @DEV function fetches amount out from the 0x api */
@@ -56,10 +57,10 @@ const SwapBox = () => {
             const resp = await axios.post(
                 `http://localhost:4000/getAmountsOut?sellTokenAddress=${sellTokenAddress}&buyTokenAddress=${buyTokenAddress}&amountToSell=${amountToSell}`
                 );
-                console.log('logg from swapBox fetchAMount()',resp)
+            console.log('logg from swapBox fetchAMount()',resp)
             return resp;
         }catch(e){
-            console.log('\n\nERR: fetchAmount()\n',e);
+            console.log('\n\nERR: fetchAmount()-> swapBox component\n',e)
         }
 
     }
@@ -73,10 +74,11 @@ const SwapBox = () => {
                 const amountToSell = amount1*10**selectedToken1.decimals;
                 const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
                 const amountBack = resp.data.buyAmount /(10**selectedToken2.decimals)
-            
+
                 setOutputAmount(amountBack);
             }
         }
+
     // Handle the swap action
     const handleSwap = () => {
         console.log(`Amount in box 1: ${amount1}`);
