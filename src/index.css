@@ -15,7 +15,7 @@ code {
   display: flex;
   align-items: center;
   position: relative;
-}
+} 
 
 .token-select {
   width: 100px;

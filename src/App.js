@@ -12,7 +12,7 @@ import Header from "./components/header.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-// Create a QueryClient instance  
+// Create a QueryClient instance 
 const queryClient = new QueryClient();
 //const metamaskConfig = metamaskWallet();
 function App() {
