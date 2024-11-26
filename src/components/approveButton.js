@@ -20,7 +20,7 @@ const ApproveButton = () => {
             style={{
                 padding: "1rem",
                 fontSize: "1.5rem",
-                backgroundColor: "#FF8C00", // Mango orange
+                backgroundColor: "#F26E01", // Mango orange
                 borderColor: "#FFA500", // Match the border color
                 color: "#FFFFFF", // White text for contrast
             }}
