@@ -6,6 +6,9 @@ import { useConnectionStatus,
     useContract,
     useContractWrite
 } from "@thirdweb-dev/react";
+import ApproveButton from './approveButton.js';
+import ReviewButton from './reviewButton.js';
+
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
@@ -16,7 +19,7 @@ const qs = require('qs')
 dotenv.config();
 
 // Mock list of tokens
-const tokens = [
+const tokens = [{empty:true},
     { symbol: 'WETH', name: 'Ethereum', address: '0x4200000000000000000000000000000000000006',decimals:18, image: ethLogo },
     { symbol: 'USDC', name: 'USD Coin', address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',decimals:6, image: usdcLogo },
     {symbol:'Brett', name:'BRETT',address:'0x532f27101965dd16442E59d40670FaF5eBB142E4',decimals:18}
@@ -41,7 +44,7 @@ const SwapBox = () => {
     const [amount2, setAmount2] = useState('');
     const [tokenList, setTokenList] = useState([]);
     const [selectedToken1, setSelectedToken1] = useState(tokens[0]);
-    const [selectedToken2, setSelectedToken2] = useState(tokens[1]);
+    const [selectedToken2, setSelectedToken2] = useState(tokens[0]);
     const [showModal, setShowModal] = useState(false);
     const [outPutAmount,setOutputAmount] = useState('Enter Amount');
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
@@ -92,11 +95,15 @@ const SwapBox = () => {
                 const sellTokenAddress = selectedToken1.address;
                 const buyTokenAddress = selectedToken2.address;
                 const amountToSell = amount1*10**selectedToken1.decimals;
-                const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
-                console.log('resp',resp)
-                const amountBack = resp.buyAmount /(10**selectedToken2.decimals)
+                try{
+                    const resp = await fetchAmountOut(sellTokenAddress,buyTokenAddress,amountToSell);
+                    console.log('resp',resp)
+                    const amountBack = resp.buyAmount /(10**selectedToken2.decimals)
             
-                setOutputAmount(amountBack);
+                    setOutputAmount(amountBack);
+                } catch (e) {
+                    console.log('HandleBlur() -> Calling FetchAmount Error',e);
+                };
             }
         }
     // Handle the swap action
@@ -143,10 +150,29 @@ const SwapBox = () => {
                                     onBlur={handleBlur} ///
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
-                                <Button
+                                {selectedToken1.empty == true ? (
+                                    <Button
                                     variant="outline-secondary"
                                     onClick={() => { setIsSelectingToken1(true); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px' }}
+                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
+                                    width: "95px",  // Fixed width
+                                    height: "40px",  // Fixed height
+                                    fontSize: '0.8rem',
+                                    textAlign: "center", // Center text
+                                    backgroundColor: "#FF8C00", // Mango orange
+                                    borderColor: "#FFA500", // Match the border color
+                                    color: "#FFFFFF", // White text for contrast
+                                    }}
+                                >Select Token</Button>
+                                ) : (<Button
+                                    variant="outline-secondary"
+                                    onClick={() => { setIsSelectingToken1(true); setShowModal(true); }}
+                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
+                                    width: "85px",  // Fixed width
+                                    height: "40px",  // Fixed height
+                                    textAlign: "center", // Center text
+                                    
+                                    }}
                                 >
                                     <Image
                                         src={selectedToken1.image}
@@ -155,7 +181,9 @@ const SwapBox = () => {
                                         style={{ width: '24px', height: '24px', marginRight: '5px' }}
                                     />
                                     <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span>
-                                </Button>
+                                </Button>)}
+                                
+                               
                             </div>
                         </Form.Group>
 
@@ -169,31 +197,47 @@ const SwapBox = () => {
                                     onChange={handleAmount2Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
-                                <Button
+                                {selectedToken2.empty == true ? (
+                                    <Button
                                     variant="outline-secondary"
                                     onClick={() => { setIsSelectingToken1(false); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px' }}
+                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
+                                    width: "95px",  // Fixed width
+                                    height: "40px",  // Fixed height
+                                    fontSize: '0.8rem',
+                                    textAlign: "center", // Center text
+                                    backgroundColor: "#FF8C00", // Mango orange
+                                    borderColor: "#FFA500", // Match the border color
+                                    color: "#FFFFFF", // White text for contrast
+                                    }}
+                                >Select Token</Button>
+                                ) : (<Button
+                                    variant="outline-secondary"
+                                    onClick={() => { setIsSelectingToken1(false); setShowModal(true); }}
+                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
+                                    width: "85px",  // Fixed width
+                                    height: "40px",  // Fixed height
+                                    textAlign: "center", // Center text
+                                    
+                                    }}
                                 >
                                     <Image
-                                        src={selectedToken2.image}
-                                        alt={selectedToken2.symbol}
+                                        src={selectedToken1.image}
+                                        alt={selectedToken1.symbol}
                                         roundedCircle
                                         style={{ width: '24px', height: '24px', marginRight: '5px' }}
                                     />
-                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken2.symbol}</span>
-                                </Button>
+                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span>
+                                </Button>)}
                             </div>
                         </Form.Group>
 
                         {/* Swap Button */}
+                        {console.log('this is amount in',amount1)}
                         
-                        {connectionStatus == "connected" ? (
-                            <Web3Button
-                            contractAddress='0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766'
-                            className="w-100" 
-                            style={{ padding: '1rem', fontSize: '1.5rem' }} 
-                            >swap</Web3Button>
-                        ) : (
+                        {connectionStatus == "connected" && amount1 == '' ? (
+                            <ReviewButton/>
+                        ) : connectionStatus == "connected" && amount1 != '' ? (<ApproveButton/>) : (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
                         )}
                     </Form>
