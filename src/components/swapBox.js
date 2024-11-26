@@ -223,8 +223,8 @@ const SwapBox = () => {
                                     }}
                                 >
                                     <Image
-                                        src={selectedToken1.image}
-                                        alt={selectedToken1.symbol}
+                                        src={selectedToken2.image}
+                                        alt={selectedToken2.symbol}
                                         roundedCircle
                                         style={{ width: '24px', height: '24px', marginRight: '5px' }}
                                     />
