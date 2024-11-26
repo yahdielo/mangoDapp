@@ -8,13 +8,14 @@ import { useConnectionStatus,
 } from "@thirdweb-dev/react";
 import ApproveButton from './approveButton.js';
 import ReviewButton from './reviewButton.js';
-
+import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
 import {ethers} from 'ethers';
 import dotenv from 'dotenv';
+import '../App.css'
 const qs = require('qs')
 dotenv.config();
 
@@ -151,40 +152,14 @@ const SwapBox = () => {
                                     onBlur={handleBlur} ///
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
-                                {selectedToken1.empty == true ? (
-                                    <Button
-                                    variant="outline-secondary"
-                                    onClick={() => { setIsSelectingToken1(true); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
-                                    width: "95px",  // Fixed width
-                                    height: "40px",  // Fixed height
-                                    fontSize: '0.8rem',
-                                    textAlign: "center", // Center text
-                                    backgroundColor: "#FF8C00", // Mango orange
-                                    borderColor: "#FFA500", // Match the border color
-                                    color: "#FFFFFF", // White text for contrast
+                                <SelectTokenButton
+                                    isSelected={!selectedToken1.empty}
+                                    token={selectedToken1}
+                                    onClick={() => {
+                                        setIsSelectingToken1(true);
+                                        setShowModal(true);
                                     }}
-                                >Select Token</Button>
-                                ) : (<Button
-                                    variant="outline-secondary"
-                                    onClick={() => { setIsSelectingToken1(true); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
-                                    width: "85px",  // Fixed width
-                                    height: "40px",  // Fixed height
-                                    textAlign: "center", // Center text
-                                    
-                                    }}
-                                >
-                                    <Image
-                                        src={selectedToken1.image}
-                                        alt={selectedToken1.symbol}
-                                        roundedCircle
-                                        style={{ width: '24px', height: '24px', marginRight: '5px' }}
-                                    />
-                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span>
-                                </Button>)}
-                                
-                               
+                                />                               
                             </div>
                         </Form.Group>
 
@@ -198,38 +173,15 @@ const SwapBox = () => {
                                     onChange={handleAmount2Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
-                                {selectedToken2.empty == true ? (
-                                    <Button
-                                    variant="outline-secondary"
-                                    onClick={() => { setIsSelectingToken1(false); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
-                                    width: "95px",  // Fixed width
-                                    height: "40px",  // Fixed height
-                                    fontSize: '0.8rem',
-                                    textAlign: "center", // Center text
-                                    backgroundColor: "#FF8C00", // Mango orange
-                                    borderColor: "#FFA500", // Match the border color
-                                    color: "#FFFFFF", // White text for contrast
+                                <SelectTokenButton
+                                    isSelected={!selectedToken2.empty}
+                                    token={selectedToken2}
+                                    onClick={() => {
+                                        setIsSelectingToken1(false);
+                                        setShowModal(true);
                                     }}
-                                >Select Token</Button>
-                                ) : (<Button
-                                    variant="outline-secondary"
-                                    onClick={() => { setIsSelectingToken1(false); setShowModal(true); }}
-                                    style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', padding: '0 5px', 
-                                    width: "85px",  // Fixed width
-                                    height: "40px",  // Fixed height
-                                    textAlign: "center", // Center text
-                                    
-                                    }}
-                                >
-                                    <Image
-                                        src={selectedToken2.image}
-                                        alt={selectedToken2.symbol}
-                                        roundedCircle
-                                        style={{ width: '24px', height: '24px', marginRight: '5px' }}
-                                    />
-                                    <span style={{ fontSize: '0.8rem' }}>{selectedToken1.symbol}</span>
-                                </Button>)}
+                                /> 
+                                
                             </div>
                         </Form.Group>
 
