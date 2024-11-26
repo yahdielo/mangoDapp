@@ -7,7 +7,7 @@ import { useConnectionStatus,
     useContractWrite
 } from "@thirdweb-dev/react";
 import ApproveButton from './approveButton.js';
-import ReviewButton from './reviewButton.js';
+import ConnectedButton from './connectedButton.js';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
@@ -189,8 +189,8 @@ const SwapBox = () => {
                         {console.log('this is amount in',amount1)}
                         
                         {connectionStatus == "connected" && amount1 == '' ? (
-                            <ReviewButton/>
-                        ) : connectionStatus == "connected" && amount1 != '' ? (<ApproveButton/>) : (
+                            <ConnectedButton/>
+                        ) : connectionStatus == "connected" && amount1 != '' && selectedToken1.empty != true ? (<ApproveButton/>) : (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
                         )}
                     </Form>
