@@ -48,7 +48,8 @@ const SwapBox = () => {
     const [showModal, setShowModal] = useState(false);
     const [outPutAmount,setOutputAmount] = useState('Enter Amount');
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
-
+    const [isSelectingToken2, setIsSelectingToken2] = useState(true);
+ 
     const connectionStatus = useConnectionStatus();
 
     const handleTokenSelect = (token) => {
