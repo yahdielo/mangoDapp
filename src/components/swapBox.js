@@ -1,6 +1,11 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
-import { useConnectionStatus,ConnectWallet } from "@thirdweb-dev/react";
+import { useConnectionStatus,
+    Web3Button,
+    ConnectWallet,
+    useContract,
+    useContractWrite
+} from "@thirdweb-dev/react";
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
@@ -19,6 +24,19 @@ const tokens = [
 ];
 
 const SwapBox = () => {
+
+    const contractAddress = '0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766';
+    const { contract,
+            isLoading: isContractLoading,
+            error: contractError 
+        } = useContract(contractAddress);
+
+    // Define the contract function for swapping
+    const { mutateAsync: callSwap,
+            isLoading: isWriting 
+        } = useContractWrite(contract, "ethToTokensV3");
+ 
+
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
     const [tokenList, setTokenList] = useState([]);
@@ -87,6 +105,26 @@ const SwapBox = () => {
         console.log(`Selected token 1: ${selectedToken1.symbol}, Address: ${selectedToken1.address}`);
         console.log(`Amount in box 2: ${amount2}`);
         console.log(`Selected token 2: ${selectedToken2.symbol}, Address: ${selectedToken2.address}`);
+        try {
+            if (!contract) {
+                console.error("Contract not loaded");
+                return;
+            }
+
+            const args = [
+                selectedToken2.address, // tokenAddress
+                3000,                  // feePool (example value, adjust based on your contract's requirements)
+            ];
+
+            console.log("Calling swap with args:", args);
+
+            const tx = callSwap({ args });
+            console.log("Transaction successful:", tx);
+            alert("Swap successful!");
+        } catch (err) {
+            console.error("Error while swapping:", err);
+            alert("Swap failed!");
+        }
     };
 
     return (
@@ -150,14 +188,11 @@ const SwapBox = () => {
                         {/* Swap Button */}
                         
                         {connectionStatus == "connected" ? (
-                            <Button
-                                variant="primary"
-                                className="w-100"
-                                style={{ padding: '1rem', fontSize: '1.5rem' }}
-                                onClick={handleSwap}
-                            >
-                                Swap
-                            </Button>
+                            <Web3Button
+                            contractAddress='0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766'
+                            className="w-100" 
+                            style={{ padding: '1rem', fontSize: '1.5rem' }} 
+                            >swap</Web3Button>
                         ) : (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
                         )}
