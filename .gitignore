@@ -10,7 +10,7 @@ env
 /coverage
 
 # production
-/build
+
 /node_modules
 
 # misc
