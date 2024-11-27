@@ -6,12 +6,9 @@ import { useConnectionStatus,
     useContractWrite
 } from "@thirdweb-dev/react";
 
-import {ethers} from 'ethers';
-import dotenv from 'dotenv';
-const qs = require('qs')
-dotenv.config();
 
-const ReviewButton = () => {
+
+const ConnectedButton = () => {
 
     return(
         <Button
@@ -23,8 +20,8 @@ const ReviewButton = () => {
                 borderColor: "#FFA500", // Match the border color
                 color: "#FFFFFF", // White text for contrast
             }}
-            >review</Button>
+            >connected</Button>
     );
 
 }
-export default ReviewButton;
+export default ConnectedButton;

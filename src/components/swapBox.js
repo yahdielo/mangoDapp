@@ -21,9 +21,9 @@ dotenv.config();
 
 // Mock list of tokens
 const tokens = [{empty:true},
-    { symbol: 'WETH', name: 'Ethereum', address: '0x4200000000000000000000000000000000000006',decimals:18, image: ethLogo },
-    { symbol: 'USDC', name: 'USD Coin', address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',decimals:6, image: usdcLogo },
-    {symbol:'Brett', name:'BRETT',address:'0x532f27101965dd16442E59d40670FaF5eBB142E4',decimals:18}
+    { symbol: 'WETH', name: 'Ethereum', address: '0x4200000000000000000000000000000000000006',decimals:18, image: ethLogo,empty:false},
+    { symbol: 'USDC', name: 'USD Coin', address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',decimals:6, image: usdcLogo,empty:false},
+    {symbol:'Brett', name:'BRETT',address:'0x532f27101965dd16442E59d40670FaF5eBB142E4',decimals:18,empty:false}
     // Add more tokens as needed
 ];
 
@@ -186,11 +186,13 @@ const SwapBox = () => {
                         </Form.Group>
 
                         {/* Swap Button */}
-                        {console.log('this is amount in',amount1)}
+                        {console.log('this is amount 1',amount1)}
                         
-                        {connectionStatus == "connected" && amount1 == '' ? (
+                        {connectionStatus === "connected" && amount1 === '' ? (
                             <ConnectedButton/>
-                        ) : connectionStatus == "connected" && amount1 != '' && selectedToken1.empty != true ? (<ApproveButton/>) : (
+                        ) : connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty === true  ? (<ConnectedButton/>) : 
+                            connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty !== true ? (<ApproveButton/>) : 
+                            (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
                         )}
                     </Form>
