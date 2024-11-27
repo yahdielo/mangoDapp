@@ -11,9 +11,14 @@ import SwapBox from "./components/swapBox.js";
 import Header from "./components/header.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import dotenv from 'dotenv';
 
-// Create a QueryClient instance 
+dotenv.config();
+
+
+// Create a QueryClient instance  
 const queryClient = new QueryClient();
+const activeChain = "base";
 //const metamaskConfig = metamaskWallet();
 function App() {
   
@@ -21,7 +26,7 @@ function App() {
     //wrapping the app on the @tanstack/react-query
     //also wrapping the react components in the thirdweb cli
     <QueryClientProvider client={queryClient}>
-    <ThirdwebProvider desiredChainId={ChainId.Base} supportedWallets={[walletConnect(),metamaskWallet()]}>
+    <ThirdwebProvider activeChain={activeChain} supportedWallets={[walletConnect(),metamaskWallet()]}>
       
     <div className="App"> 
     {/* Header*/}
