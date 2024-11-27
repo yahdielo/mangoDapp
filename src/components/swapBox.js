@@ -125,7 +125,6 @@ const SwapBox = () => {
                 selectedToken2.address, // tokenAddress
                 3000,                  // feePool (example value, adjust based on your contract's requirements)
             ];
-
             console.log("Calling swap with args:", args);
 
             const tx = callSwap({ args });
