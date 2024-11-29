@@ -28,7 +28,7 @@ const tokens = [{empty:true},
     // Add more tokens as needed
 ];
 
-const SwapBox = () => {
+const SwapBox = ({Client, Spender}) => {
 
     const contractAddress = '0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766';
     const { contract,
@@ -190,8 +190,17 @@ const SwapBox = () => {
                         
                         {connectionStatus === "connected" && amount1 === '' ? (
                             <ConnectedButton/>
-                        ) : connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty === true  ? (<ConnectedButton/>) : 
-                            connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty !== true ? (<ApproveButton/>) :
+                        ) : connectionStatus === "connected" && 
+                                amount1 !== '' && 
+                                selectedToken1.empty === true  ? (<ConnectedButton/>) : 
+                            connectionStatus === "connected" && amount1 !== '' && 
+                                selectedToken1.empty !== true && 
+                                selectedToken2.empty !== true ? (<ApproveButton 
+                                                                    tokenAddress = {selectedToken1.address}
+                                                                    amount = {amount1}
+                                                                    client={Client}
+                                                                    spender={Spender}
+                                                                    />) :
                             connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty == true ? (<ConnectedButton/>) :
                             (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
