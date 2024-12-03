@@ -191,7 +191,10 @@ const SwapBox = () => {
                         {connectionStatus === "connected" && amount1 === '' ? (
                             <ConnectedButton/>
                         ) : connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty === true  ? (<ConnectedButton/>) : 
-                            connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty !== true ? (<ApproveButton/>) :
+                            connectionStatus === "connected" && amount1 !== '' && 
+                                selectedToken1.empty !== true && selectedToken2.empty !== true ? (<ApproveButton
+                                                                                                tokenAddress={selectedToken2}
+                                                                                                amount={amount1} />) :
                             connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty == true ? (<ConnectedButton/>) :
                             (
                             <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
