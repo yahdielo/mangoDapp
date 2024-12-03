@@ -174,9 +174,14 @@ const SwapBox = () => {
                         {/* Swap Button */}
                         {console.log('bool ',account?.address)}
                         
-                        {account?.address != null ? (<ConnectedButton/>):(
+                        {account?.address != null && selectedToken1?.address != null && selectedToken2?.address != null && amount1 != '' ? (
+                            <ApproveButton />
+                            ) : account?.address != null ? (
+                            <ConnectedButton />
+                            ) : (
                             <ConnectButton client={Client} className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
-                        )}
+                            )}
+
                     </Form>
                 </Card.Body>
            </Card>
