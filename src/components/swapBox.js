@@ -1,13 +1,10 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
-import { useConnectionStatus,
-    Web3Button,
-    ConnectWallet,
-    useContract,
-    useContractWrite
-} from "@thirdweb-dev/react";
+
 import ApproveButton from './approveButton.js';
-import ConnectedButton from './connectedButton.js';
+import ConnectedButton from './connectedButton';
+import { TransactionButton, ConnectButton, useActiveAccount, useReadContract } from "thirdweb/react";
+import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
@@ -30,17 +27,8 @@ const tokens = [{empty:true},
 
 const SwapBox = () => {
 
-    const contractAddress = '0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766';
-    const { contract,
-            isLoading: isContractLoading,
-            error: contractError 
-        } = useContract(contractAddress);
-
-    // Define the contract function for swapping
-    const { mutateAsync: callSwap,
-            isLoading: isWriting 
-        } = useContractWrite(contract, "ethToTokensV3");
- 
+   const account = useActiveAccount();
+   console.log('this is account',account?.address);
 
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
@@ -52,8 +40,6 @@ const SwapBox = () => {
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
     const [isSelectingToken2, setIsSelectingToken2] = useState(true);
  
-    const connectionStatus = useConnectionStatus();
-
     const handleTokenSelect = (token) => {
         if (isSelectingToken1) {
             setSelectedToken1(token);
@@ -115,6 +101,7 @@ const SwapBox = () => {
         console.log(`Selected token 1: ${selectedToken1.symbol}, Address: ${selectedToken1.address}`);
         console.log(`Amount in box 2: ${amount2}`);
         console.log(`Selected token 2: ${selectedToken2.symbol}, Address: ${selectedToken2.address}`);
+        /** 
         try {
             if (!contract) {
                 console.error("Contract not loaded");
@@ -134,6 +121,7 @@ const SwapBox = () => {
             console.error("Error while swapping:", err);
             alert("Swap failed!");
         }
+        */
     };
 
     return (
@@ -168,8 +156,6 @@ const SwapBox = () => {
                             <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
                                 <Form.Control
                                     type="text"
-                                    placeholder={`${outPutAmount}`}
-                                    value={amount2}
                                     onChange={handleAmount2Change}
                                     style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
                                 />
@@ -186,18 +172,10 @@ const SwapBox = () => {
                         </Form.Group>
 
                         {/* Swap Button */}
-                        {console.log('this is amount 1',amount1)}
+                        {console.log('bool ',account?.address)}
                         
-                        {connectionStatus === "connected" && amount1 === '' ? (
-                            <ConnectedButton/>
-                        ) : connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty === true  ? (<ConnectedButton/>) : 
-                            connectionStatus === "connected" && amount1 !== '' && 
-                                selectedToken1.empty !== true && selectedToken2.empty !== true ? (<ApproveButton
-                                                                                                tokenAddress={selectedToken2}
-                                                                                                amount={amount1} />) :
-                            connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty == true ? (<ConnectedButton/>) :
-                            (
-                            <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
+                        {account?.address != null ? (<ConnectedButton/>):(
+                            <ConnectButton client={Client} className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
                         )}
                     </Form>
                 </Card.Body>
