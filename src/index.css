@@ -20,3 +20,17 @@ code {
 .token-select {
   width: 100px;
 }
+.connectButton {
+  /* High specificity or use !important */
+  padding: 1rem !important;
+  font-size: 1.5rem !important;
+  background-color: #F26E01 !important;
+  color: #fff !important;
+  text-align: center !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.connectButton:hover {
+  box-shadow: 0px 0px 40px 5px rgba(100, 230, 250, 0.7) !important;
+  transform: translateY(-2px) !important;
+}

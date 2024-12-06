@@ -1,8 +1,7 @@
 import { Button } from 'react-bootstrap';
-import { useEffect,useState } from 'react';
-
-import { prepareContractCall, getContract } from "thirdweb";
-import { TransactionButton } from "thirdweb/react";
+import { approve } from "thirdweb/extensions/erc20";
+import { prepareContractCall, getContract, sendTransaction } from "thirdweb";
+import { TransactionButton,useActiveAccount,useSendTransaction } from "thirdweb/react";
 import {ethers} from 'ethers';
 import Client from '../client.js';
 import dotenv from 'dotenv';
@@ -11,12 +10,29 @@ dotenv.config();
 
 const client = Client;
 const ApproveButton = ({tokenAddress,amount}) => {
-    console.log('this is amount',amount);
-    console.log('this is token address',tokenAddress);
+    //const { mutateAsync: approve } = useSendTransaction();
+    const spender = `${process.env.MANGO_ROUTER00}`;
+    const account = useActiveAccount();
+
+    const {contract} = getContract({
+        client,
+        chain: 8453,
+        address: tokenAddress,
+       });
+
+    const transaction = approve({
+        contract : contract,
+        spender: spender,
+        amount:amount,
+
+    });
 
     return(
-        <TransactionButton
-            
+        <TransactionButton 
+            client={client}
+            transaction={()=>{
+                sendTransaction({ transaction, account })
+            }}
             className="w-100" 
             style={{
                 padding: "1rem",

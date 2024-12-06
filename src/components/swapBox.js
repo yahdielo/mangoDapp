@@ -1,9 +1,12 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
-
 import ApproveButton from './approveButton.js';
 import ConnectedButton from './connectedButton';
-import { TransactionButton, ConnectButton, useActiveAccount, useReadContract } from "thirdweb/react";
+import { TransactionButton,
+    ConnectButton,
+    useActiveAccount,
+    useReadContract,
+    darkTheme } from "thirdweb/react";
 import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
@@ -128,6 +131,7 @@ const SwapBox = () => {
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
             <Card style={{ width: '30rem', padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
                 <Card.Body>
+                    {account?.address == null ? (<ConnectButton client={Client}/>):(
                     <Form>
                         {/* Token 1 selection with image and amount input */}
                         <Form.Group className="mb-4">
@@ -171,18 +175,16 @@ const SwapBox = () => {
                             </div>
                         </Form.Group>
 
-                        {/* Swap Button */}
-                        {console.log('bool ',account?.address)}
-                        
+                        {/* Swap Button */}                    
                         {account?.address != null && selectedToken1?.address != null && selectedToken2?.address != null && amount1 != '' ? (
                             <ApproveButton />
                             ) : account?.address != null ? (
                             <ConnectedButton />
                             ) : (
-                            <ConnectButton client={Client} className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
+                            <ConnectButton client={Client}/>
                             )}
 
-                    </Form>
+                    </Form>)}
                 </Card.Body>
            </Card>
 

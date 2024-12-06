@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import Client from './client.js';
 import reportWebVitals from './reportWebVitals';
-import { ThirdwebProvider, useActiveAccount, connectedButton } from "thirdweb/react";
+import { ThirdwebProvider, useActiveAccount, ConnectedButton } from "thirdweb/react";
 import dotenv from 'dotenv';
 dotenv.config();
 const root = ReactDOM.createRoot(document.getElementById('root'));
