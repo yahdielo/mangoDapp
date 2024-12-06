@@ -129,65 +129,86 @@ const SwapBox = () => {
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-            <Card style={{ width: '25rem',height:"30rem", padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' , content: 'center'
-}}>
+            <Card style={{ width: '27rem', height: '20rem', padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-                    {account?.address == null ? (<ConnectButton client={Client}/>):(
-                    <Form>
-                        {/* Token 1 selection with image and amount input */}
-                        <Form.Group className="mb-4">
-                            <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter amount"
-                                    value={amount1}
-                                    onChange={handleAmount1Change}
-                                    onBlur={handleBlur} ///
-                                    style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
-                                />
-                                <SelectTokenButton
-                                    isSelected={!selectedToken1.empty}
-                                    token={selectedToken1}
-                                    onClick={() => {
-                                        setIsSelectingToken1(true);
-                                        setShowModal(true);
+                    {account?.address == null ? (
+                        <ConnectButton client={Client} />
+                    ) : (
+                        <Form style={{ width: '100%' }}>
+                            {/* Token 1 selection with image and amount input */}
+                            <Form.Group className="mb-4">
+                                <div
+                                    className="token-input-container"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '100%',
                                     }}
-                                />                               
-                            </div>
-                        </Form.Group>
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter amount"
+                                        value={amount1}
+                                        onChange={handleAmount1Change}
+                                        onBlur={handleBlur}
+                                        style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
+                                    />
+                                    <SelectTokenButton
+                                        isSelected={!selectedToken1.empty}
+                                        token={selectedToken1}
+                                        onClick={() => {
+                                            setIsSelectingToken1(true);
+                                            setShowModal(true);
+                                        }}
+                                    />
+                                </div>
+                            </Form.Group>
 
-                        {/* Token 2 selection with image and amount input */}
-                        <Form.Group className="mb-4">
-                            <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
-                                <Form.Control
-                                    type="text"
-                                    onChange={handleAmount2Change}
-                                    style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
-                                />
-                                <SelectTokenButton
-                                    isSelected={!selectedToken2.empty}
-                                    token={selectedToken2}
-                                    onClick={() => {
-                                        setIsSelectingToken1(false);
-                                        setShowModal(true);
+                            {/* Token 2 selection with image and amount input */}
+                            <Form.Group className="mb-4">
+                                <div
+                                    className="token-input-container"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '100%',
                                     }}
-                                /> 
-                                
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        onChange={handleAmount2Change}
+                                        style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
+                                    />
+                                    <SelectTokenButton
+                                        isSelected={!selectedToken2.empty}
+                                        token={selectedToken2}
+                                        onClick={() => {
+                                            setIsSelectingToken1(false);
+                                            setShowModal(true);
+                                        }}
+                                    />
+                                </div>
+                            </Form.Group>
+
+                            {/* Center-aligned Swap Button */}
+                            <div className="d-flex justify-content-center">
+                                {account?.address != null &&
+                                selectedToken1?.address != null &&
+                                selectedToken2?.address != null &&
+                                amount1 != '' ? (
+                                    <ApproveButton />
+                                ) : account?.address != null ? (
+                                    <ConnectedButton />
+                                ) : (
+                                    <ConnectButton client={Client} />
+                                )}
                             </div>
-                        </Form.Group>
-
-                        {/* Swap Button */}                    
-                        {account?.address != null && selectedToken1?.address != null && selectedToken2?.address != null && amount1 != '' ? (
-                            <ApproveButton />
-                            ) : account?.address != null ? (
-                            <ConnectedButton />
-                            ) : (
-                            <ConnectButton client={Client}/>
-                            )}
-
-                    </Form>)}
+                        </Form>
+                    )}
                 </Card.Body>
-           </Card>
+</Card>
 
             {/* Modal for token selection */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
