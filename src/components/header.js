@@ -1,12 +1,9 @@
-import { 
-    ChainId,
-    ConnectWallet,
-    metamaskWallet,
-    coinbaseWallet,
-    walletConnect
-  } 
-from "@thirdweb-dev/react";import { Container,Navbar} from 'react-bootstrap';
+import { useActiveAccount, ConnectButton } from "thirdweb/react";
+import { Container,Navbar} from 'react-bootstrap';
 import MangoLogo from '../imgs/Mango.png';
+import Client from '../client';
+const clientId = `${process.env.CLIENT_ID}`;
+
 const Header = ()=>{
     return(
         <Navbar bg="light" expand="lg">
@@ -17,7 +14,7 @@ const Header = ()=>{
             height="50"
           />
           <div className="ml-auto">
-          <ConnectWallet />
+          <ConnectButton client={Client}/>
           </div>
         </Container>
       </Navbar>
