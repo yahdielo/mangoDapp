@@ -198,7 +198,7 @@ const SwapBox = () => {
                                 selectedToken1?.address != null &&
                                 selectedToken2?.address != null &&
                                 amount1 != '' ? (
-                                    <ApproveButton />
+                                    <ApproveButton tokenAddress={selectedToken1.address} amount={amount1}/>
                                 ) : account?.address != null ? (
                                     <ConnectedButton />
                                 ) : (

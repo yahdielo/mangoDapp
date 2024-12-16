@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { approve } from "thirdweb/extensions/erc20";
-import { prepareContractCall, getContract, sendTransaction } from "thirdweb";
+import { prepareContractCall, getContract, sendTransaction , toWei} from "thirdweb";
 import { TransactionButton,useActiveAccount,useSendTransaction } from "thirdweb/react";
 import {ethers} from 'ethers';
 import Client from '../client.js';
@@ -11,13 +11,14 @@ dotenv.config();
 const client = Client;
 const ApproveButton = ({tokenAddress,amount}) => {
     //const { mutateAsync: approve } = useSendTransaction();
-    const spender = `${process.env.MANGO_ROUTER00}`;
+    const spender = `${process.env.REACT_APP_MANGO_ROUTER00}`;
     const account = useActiveAccount();
+    console.log(tokenAddress);
 
-    const {contract} = getContract({
+    const contract = getContract({
         client,
         chain: 8453,
-        address: tokenAddress,
+        address : `${tokenAddress}`,
        });
 
     const transaction = approve({
@@ -30,8 +31,23 @@ const ApproveButton = ({tokenAddress,amount}) => {
     return(
         <TransactionButton 
             client={client}
-            transaction={()=>{
-                sendTransaction({ transaction, account })
+            transaction={() => {
+                // Create a transaction object and return it
+                const tx = prepareContractCall({
+                contract,
+                method: "approve(address spender,uint256 amount)",
+                params: [`${spender}`, toWei(`${amount}`)],
+                });
+                return tx;
+            }}
+            onTransactionSent={(result) => {
+                console.log("Transaction submitted", result.transactionHash);
+            }}
+            onTransactionConfirmed={(receipt) => {
+                console.log("Transaction confirmed", receipt.transactionHash);
+            }}
+            onError={(error) => {
+                console.error("Transaction error", error);
             }}
             className="w-100" 
             style={{

@@ -4,6 +4,6 @@ dotenv.config();
 //client
 const Client = new createThirdwebClient({
     //secretKey: process.env.SECRETE_KEY,
-    clientId: `${process.env.CLIENT_ID}`
+    clientId: `${process.env.REACT_APP_CLIENT_ID}`
   });
 export default Client;
