@@ -129,7 +129,7 @@ const SwapBox = () => {
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-            <Card style={{ width: '27rem', height: '20rem', padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
+            <Card style={{ width: '27rem',  padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                     {account?.address == null ? (
                         <ConnectButton client={Client} />

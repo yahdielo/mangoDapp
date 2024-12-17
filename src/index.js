@@ -10,15 +10,17 @@ import reportWebVitals from './reportWebVitals';
 import { ThirdwebProvider, useActiveAccount, ConnectedButton } from "thirdweb/react";
 import dotenv from 'dotenv';
 dotenv.config();
+const _clientId = `${process.env.REACT_APP_CLIENT_ID}`;
+const _secreteKey = `${process.env.REACT_APP_S_KEY}`;
+console.log('console.log\n',_clientId,_secreteKey);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Create a QueryClient instance  
 const queryClient = new QueryClient();
-const _clientId = process.env.CLIENT_ID;
-const _secreteKey = process.env.S_KEY;
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider  secreteKey={_secreteKey} clientId={_clientId} activeChain={'base'}>
+      <ThirdwebProvider  clientId={_clientId} secretKey={_secreteKey} activeChain={'base'}>
       <App />
       </ThirdwebProvider>
     </QueryClientProvider>

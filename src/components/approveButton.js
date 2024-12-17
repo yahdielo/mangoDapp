@@ -12,6 +12,7 @@ const client = Client;
 const ApproveButton = ({tokenAddress,amount}) => {
     //const { mutateAsync: approve } = useSendTransaction();
     const spender = `${process.env.REACT_APP_MANGO_ROUTER00}`;
+
     const account = useActiveAccount();
     console.log(tokenAddress);
 
@@ -21,22 +22,17 @@ const ApproveButton = ({tokenAddress,amount}) => {
         address : `${tokenAddress}`,
        });
 
-    const transaction = approve({
-        contract : contract,
-        spender: spender,
-        amount:amount,
-
-    });
-
     return(
         <TransactionButton 
             client={client}
+
             transaction={() => {
                 // Create a transaction object and return it
                 const tx = prepareContractCall({
                 contract,
                 method: "approve(address spender,uint256 amount)",
                 params: [`${spender}`, toWei(`${amount}`)],
+
                 });
                 return tx;
             }}
