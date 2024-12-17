@@ -2,11 +2,7 @@ import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bo
 import { useEffect,useState } from 'react';
 import ApproveButton from './approveButton.js';
 import ConnectedButton from './connectedButton';
-import { TransactionButton,
-    ConnectButton,
-    useActiveAccount,
-    useReadContract,
-    darkTheme } from "thirdweb/react";
+import { ConnectWallet ,useUser} from "@thirdweb-dev/react";
 import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
@@ -30,8 +26,8 @@ const tokens = [{empty:true},
 
 const SwapBox = () => {
 
-   const account = useActiveAccount();
-   console.log('this is account',account?.address);
+    const { user, isLoggedIn, isLoading } = useUser();
+   console.log('this is account',user.address);
 
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
@@ -131,8 +127,8 @@ const SwapBox = () => {
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
             <Card style={{ width: '27rem',  padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-                    {account?.address == null ? (
-                        <ConnectButton client={Client} />
+                    {user ? (
+                        <ConnectWallet client={Client} />
                     ) : (
                         <Form style={{ width: '100%' }}>
                             {/* Token 1 selection with image and amount input */}
@@ -192,7 +188,7 @@ const SwapBox = () => {
                                 </div>
                             </Form.Group>
 
-                            {/* Center-aligned Swap Button */}
+                            {/* Center-aligned Swap Button 
                             <div className="d-flex justify-content-center">
                                 {account?.address != null &&
                                 selectedToken1?.address != null &&
@@ -202,9 +198,9 @@ const SwapBox = () => {
                                 ) : account?.address != null ? (
                                     <ConnectedButton />
                                 ) : (
-                                    <ConnectButton client={Client} />
+                                    <ConnectWallet client={Client} />
                                 )}
-                            </div>
+                            </div>*/}
                         </Form>
                     )}
                 </Card.Body>
