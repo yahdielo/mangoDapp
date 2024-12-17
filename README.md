@@ -25,3 +25,7 @@ Reacts missing queryClient error fix
     # rract v4 docs
 
     https://portal.thirdweb.com/react/v4/components/ConnectWallet
+
+    examples 
+
+    https://github.com/thirdweb-dev/react/blob/main/apps/example/pages/index.tsx
