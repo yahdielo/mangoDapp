@@ -11,8 +11,6 @@ const ApproveButton = ({tokenAddress,amount}) => {
 
     return(
         <Button
-           
-            
             className="w-100" 
             style={{
                 padding: "1rem",
