@@ -2,7 +2,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-
 import React from 'react';
 import { useDrag } from "react-dnd";
 import ReactDOM from 'react-dom/client';
@@ -15,7 +14,9 @@ import {
   metamaskWallet,
   coinbaseWallet,
   walletConnect,
+  es 
 } from "@thirdweb-dev/react";
+import { Ethereum, Polygon, Base } from "@thirdweb-dev/chains";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -24,12 +25,14 @@ const _secreteKey = `${process.env.REACT_APP_S_KEY}`;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Create a QueryClient instance  
 const queryClient = new QueryClient();
+const spanish = es();
 
 root.render(
   
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider clientId={_clientId} secretKey={_secreteKey} activeChain={'base'}>
+      <ThirdwebProvider clientId={_clientId} secretKey={_secreteKey} 
+           locale={spanish}>
         <App />
       </ThirdwebProvider>
     </QueryClientProvider>

@@ -2,7 +2,7 @@ import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bo
 import { useEffect,useState } from 'react';
 import ApproveButton from './approveButton.js';
 import ConnectedButton from './connectedButton';
-import { ConnectWallet ,useUser} from "@thirdweb-dev/react";
+import { ConnectWallet , useConnectionStatus,useChain} from "@thirdweb-dev/react";
 import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
@@ -10,6 +10,7 @@ import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
 import brettLogo from './assets/brett.png';
+import ConnectWalletButton from './connectWalletButton'
 import {ethers} from 'ethers';
 import dotenv from 'dotenv';
 import '../App.css'
@@ -26,8 +27,9 @@ const tokens = [{empty:true},
 
 const SwapBox = () => {
 
-    const { user, isLoggedIn, isLoading } = useUser();
-   console.log('this is account',user.address);
+    const status = useConnectionStatus();
+    const chain = useChain();
+    console.log(chain);
 
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
@@ -100,6 +102,7 @@ const SwapBox = () => {
         console.log(`Selected token 1: ${selectedToken1.symbol}, Address: ${selectedToken1.address}`);
         console.log(`Amount in box 2: ${amount2}`);
         console.log(`Selected token 2: ${selectedToken2.symbol}, Address: ${selectedToken2.address}`);
+
         /** 
         try {
             if (!contract) {
@@ -127,7 +130,7 @@ const SwapBox = () => {
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
             <Card style={{ width: '27rem',  padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-                    {user ? (
+                    {status === 'disconnected' ? (
                         <ConnectWallet client={Client} />
                     ) : (
                         <Form style={{ width: '100%' }}>
@@ -188,23 +191,19 @@ const SwapBox = () => {
                                 </div>
                             </Form.Group>
 
-                            {/* Center-aligned Swap Button 
+                            {/* Center-aligned Swap Button */}
                             <div className="d-flex justify-content-center">
-                                {account?.address != null &&
-                                selectedToken1?.address != null &&
-                                selectedToken2?.address != null &&
-                                amount1 != '' ? (
-                                    <ApproveButton tokenAddress={selectedToken1.address} amount={amount1}/>
-                                ) : account?.address != null ? (
-                                    <ConnectedButton />
-                                ) : (
-                                    <ConnectWallet client={Client} />
-                                )}
-                            </div>*/}
+                            <div className='w-100'>
+                                <ConnectWalletButton
+                                addressToken1={selectedToken1.address}
+                                addressToken2={selectedToken2.address}
+                                amount={amount1}/>
+                            </div>
+                            </div>
                         </Form>
                     )}
                 </Card.Body>
-</Card>
+            </Card>
 
             {/* Modal for token selection */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>

@@ -21,7 +21,7 @@ function App() {
         style={{
           background: 'linear-gradient(150deg,orange, yellow, green)',  // Gradient background
         }}> 
-        {/* <SwapBox/>*/}
+       <SwapBox/>
       </div>
     </div>
  

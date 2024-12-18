@@ -11,9 +11,7 @@ const ApproveButton = ({tokenAddress,amount}) => {
 
     return(
         <Button
-            client={client}
-
-            
+           
             
             className="w-100" 
             style={{
