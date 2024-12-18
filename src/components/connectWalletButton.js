@@ -18,7 +18,11 @@ const ConnectWalletButton = ({addressToken1,addressToken2,amount}) => {
     const chain = useChain();
 
 
+    console.log(addressToken1,typeof(addressToken2),amount);
+
+
     const pickButton = ()=>{
+
         if(status == 'disconnected'){
             console.log('disconnected');
             return (<ConnectWallet/>);
@@ -28,23 +32,16 @@ const ConnectWalletButton = ({addressToken1,addressToken2,amount}) => {
             console.log('switchchain');
             return (<SwitchChain/>);
         }
+        if(status === 'connected' && chain.chainId === 8453 && addressToken1 != null && addressToken2 != null && amount != null)
+        {
+            console.log('approve');
+            return (<ApproveButton/>);
+        }
         if(status === 'connected' && chain.chainId == 8453)
         {
+            console.log('brrr')
             
             return (<ConnectedButton />);
-        }
-        if(status === 'connected' && chain.chainId == 8453 && amount !== '')
-        {
-            return (<ConnectedButton />);
-        }
-        if (status === 'connected' && chain.id === 8453 && addressToken1 === '' && addressToken2 === '' && amount === '')
-        {
-            console.log('2');
-            return (<ConnectedButton/>);
-        }
-        if(status === 'connected' && chain.id === 8453 && addressToken1 !== '' && addressToken2 !== '' && amount !== '')
-        {
-            return (<ApproveButton/>);
         }
         
     };
