@@ -8,11 +8,10 @@ import './App.css';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const activeChain = "base";
+
 //const metamaskConfig = metamaskWallet();
 function App() {
   return (
- 
     <div className="App"> 
     {/* Header*/}
       <Header/>

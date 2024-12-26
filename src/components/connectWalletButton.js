@@ -9,16 +9,13 @@ import { useConnectionStatus,
 import { Button } from 'react-bootstrap';
 import { Base } from "@thirdweb-dev/chains";
 import ApproveButton from './approveButton';
-import ConnectedButton from './connectedButton'
+import ConnectedButton from './connectedButton';
 import SwitchChain from './switchChain';
 
 const ConnectWalletButton = ({addressToken1,addressToken2,amount}) => {
 
     const status = useConnectionStatus();
     const chain = useChain();
-
-
-    console.log(addressToken1,typeof(addressToken2),amount);
 
 
     const pickButton = ()=>{
@@ -34,10 +31,10 @@ const ConnectWalletButton = ({addressToken1,addressToken2,amount}) => {
         }
         if(status === 'connected' && chain.chainId === 8453 && addressToken1 != null && addressToken2 != null && amount != null)
         {
-            console.log('approve');
+            console.log('approve button rendering')
             return (<ApproveButton/>);
         }
-        if(status === 'connected' && chain.chainId == 8453)
+        if(status === 'connected' && chain.chainId === 8453)
         {
             console.log('brrr')
             

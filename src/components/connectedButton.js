@@ -20,7 +20,7 @@ const ConnectedButton = () => {
             borderColor: "#FFA500", // Match the border color
             color: "#FFFFFF", // White text for contrast
         }}
-            >Conectado 💼</Button>
+            >Conectado</Button>
     );
 
 }

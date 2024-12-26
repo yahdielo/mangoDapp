@@ -14,25 +14,39 @@ import {
   metamaskWallet,
   coinbaseWallet,
   walletConnect,
-  es 
+  es,
 } from "@thirdweb-dev/react";
-import { Ethereum, Polygon, Base } from "@thirdweb-dev/chains";
+import { Base } from "@thirdweb-dev/chains";
 import dotenv from 'dotenv';
 dotenv.config();
 
 const _clientId = `${process.env.REACT_APP_CLIENT_ID}`;
 const _secreteKey = `${process.env.REACT_APP_S_KEY}`;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Create a QueryClient instance  
 const queryClient = new QueryClient();
 const spanish = es();
 
+const sdkOptions = {
+  readonlySettings: {
+    rpcUrl: 'https://base-mainnet.g.alchemy.com/v2/', // force read calls to go through your own RPC url
+    chainId: Base.chainId, // reduce RPC calls by specifying your chain ID
+  },
+  alchemyApiKey: `${process.env.REACT_APP_ALCHEMY_API_KEY}`
+}
+
 root.render(
   
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider clientId={_clientId} secretKey={_secreteKey} 
-           locale={spanish}>
+      <ThirdwebProvider 
+          sdkOptions={sdkOptions}
+          clientId={_clientId} 
+          secretKey={_secreteKey} 
+          locale={spanish}
+          >
+             
         <App />
       </ThirdwebProvider>
     </QueryClientProvider>

@@ -14,7 +14,7 @@ const SwitchChain = () =>{
                     borderColor: "#FFA500", // Match the border color
                     color: "#FFFFFF", // White text for contrast
                 }}>
-                  Cambiar a red Base
+                  Cambiar red a Base
                 </Button>
     );
 

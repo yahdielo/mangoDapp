@@ -1,4 +1,4 @@
-import { ConnectWallet,useConnectionStatus } from "@thirdweb-dev/react";
+import { Web3Button,ConnectWallet,useConnectionStatus } from "@thirdweb-dev/react";
 import { Container,Navbar} from 'react-bootstrap';
 import MangoLogo from '../imgs/Mango.png';
 import Client from '../client';

@@ -2,7 +2,7 @@ import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bo
 import { useEffect,useState } from 'react';
 import ApproveButton from './approveButton.js';
 import ConnectedButton from './connectedButton';
-import { ConnectWallet , useConnectionStatus,useChain} from "@thirdweb-dev/react";
+import { ConnectWallet,Web3Button , useConnectionStatus,useChain} from "@thirdweb-dev/react";
 import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
@@ -198,6 +198,7 @@ const SwapBox = () => {
                                 addressToken1={selectedToken1.address}
                                 addressToken2={selectedToken2.address}
                                 amount={amount1}/>
+                               
                             </div>
                             </div>
                         </Form>
