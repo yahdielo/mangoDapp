@@ -10,13 +10,16 @@ import dotenv from 'dotenv';
 const qs = require('qs')
 dotenv.config();
 
+const erc20Abi = require('./abis/ERC20.json');
 const client = Client;
+
 const ApproveButton = ({tokenAddress,amount}) => {
 
-    const  {contract}  = useContract(tokenAddress);
+    const  {contract}  = useContract(tokenAddress,erc20Abi);
     const { mutateAsync, isLoading, error } = useContractWrite(
         contract,
-        'approve(address spender,uint256 amount)'
+        'approve(address _spender,uint256 _value)',
+        
     );
     const spender = `${process.env.REACT_APP_MANGO_ROUTER00}`;
 

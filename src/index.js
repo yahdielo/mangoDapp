@@ -28,20 +28,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
 const spanish = es();
 
-const sdkOptions = {
-  readonlySettings: {
-    rpcUrl: 'https://base-mainnet.g.alchemy.com/v2/', // force read calls to go through your own RPC url
-    chainId: Base.chainId, // reduce RPC calls by specifying your chain ID
-  },
-  alchemyApiKey: `${process.env.REACT_APP_ALCHEMY_API_KEY}`
-}
-
 root.render(
   
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThirdwebProvider 
-          sdkOptions={sdkOptions}
+          activeChain={Base}
           clientId={_clientId} 
           secretKey={_secreteKey} 
           locale={spanish}

@@ -1,5 +1,4 @@
-const Abis = {
-    ERC20 : [
+[
         {
             "constant": true,
             "inputs": [],
@@ -221,5 +220,3 @@ const Abis = {
             "type": "event"
         }
     ]
-}
-export default Abis;

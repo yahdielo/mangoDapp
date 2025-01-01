@@ -32,7 +32,7 @@ const ConnectWalletButton = ({addressToken1,addressToken2,amount}) => {
         if(status === 'connected' && chain.chainId === 8453 && addressToken1 != null && addressToken2 != null && amount != null)
         {
             console.log('approve button rendering')
-            return (<ApproveButton/>);
+            return (<ApproveButton tokenAddress={addressToken1} amount={amount} />);
         }
         if(status === 'connected' && chain.chainId === 8453)
         {
