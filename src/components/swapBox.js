@@ -1,19 +1,16 @@
 import { Container, Button, Card, Form, Modal, ListGroup, Image } from 'react-bootstrap';
 import { useEffect,useState } from 'react';
-import { useConnectionStatus,
-    Web3Button,
-    ConnectWallet,
-    useContract,
-    useContractWrite
-} from "@thirdweb-dev/react";
 import ApproveButton from './approveButton.js';
-import ConnectedButton from './connectedButton.js';
+import ConnectedButton from './connectedButton';
+import { ConnectWallet,Web3Button , useConnectionStatus,useChain} from "@thirdweb-dev/react";
+import Client from '../client';
 import SelectTokenButton from './selecTokenButton.js';
 //import FetchAmountOut from "./fetchAmountOut.js"
 import axios from 'axios';
 import ethLogo from './assets/eth.png';
 import usdcLogo from './assets/usdc.png';
 import brettLogo from './assets/brett.png';
+import ConnectWalletButton from './connectWalletButton'
 import {ethers} from 'ethers';
 import dotenv from 'dotenv';
 import '../App.css'
@@ -30,17 +27,9 @@ const tokens = [{empty:true},
 
 const SwapBox = ({Client, Spender}) => {
 
-    const contractAddress = '0x9900c7EFeefCad12508F39EC1fcDd88E33E9d766';
-    const { contract,
-            isLoading: isContractLoading,
-            error: contractError 
-        } = useContract(contractAddress);
-
-    // Define the contract function for swapping
-    const { mutateAsync: callSwap,
-            isLoading: isWriting 
-        } = useContractWrite(contract, "ethToTokensV3");
- 
+    const status = useConnectionStatus();
+    const chain = useChain();
+    console.log(chain);
 
     const [amount1, setAmount1] = useState('');
     const [amount2, setAmount2] = useState('');
@@ -52,8 +41,6 @@ const SwapBox = ({Client, Spender}) => {
     const [isSelectingToken1, setIsSelectingToken1] = useState(true); // To track which token selection modal to show
     const [isSelectingToken2, setIsSelectingToken2] = useState(true);
  
-    const connectionStatus = useConnectionStatus();
-
     const handleTokenSelect = (token) => {
         if (isSelectingToken1) {
             setSelectedToken1(token);
@@ -115,6 +102,8 @@ const SwapBox = ({Client, Spender}) => {
         console.log(`Selected token 1: ${selectedToken1.symbol}, Address: ${selectedToken1.address}`);
         console.log(`Amount in box 2: ${amount2}`);
         console.log(`Selected token 2: ${selectedToken2.symbol}, Address: ${selectedToken2.address}`);
+
+        /** 
         try {
             if (!contract) {
                 console.error("Contract not loaded");
@@ -134,80 +123,88 @@ const SwapBox = ({Client, Spender}) => {
             console.error("Error while swapping:", err);
             alert("Swap failed!");
         }
+        */
     };
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-            <Card style={{ width: '30rem', padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
-                <Card.Body>
-                    <Form>
-                        {/* Token 1 selection with image and amount input */}
-                        <Form.Group className="mb-4">
-                            <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter amount"
-                                    value={amount1}
-                                    onChange={handleAmount1Change}
-                                    onBlur={handleBlur} ///
-                                    style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
-                                />
-                                <SelectTokenButton
-                                    isSelected={!selectedToken1.empty}
-                                    token={selectedToken1}
-                                    onClick={() => {
-                                        setIsSelectingToken1(true);
-                                        setShowModal(true);
+            <Card style={{ width: '27rem',  padding: '2rem', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)' }}>
+                <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                    {status === 'disconnected' ? (
+                        <ConnectWallet client={Client} />
+                    ) : (
+                        <Form style={{ width: '100%' }}>
+                            {/* Token 1 selection with image and amount input */}
+                            <Form.Group className="mb-4">
+                                <div
+                                    className="token-input-container"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '100%',
                                     }}
-                                />                               
-                            </div>
-                        </Form.Group>
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter amount"
+                                        value={amount1}
+                                        onChange={handleAmount1Change}
+                                        onBlur={handleBlur}
+                                        style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
+                                    />
+                                    <SelectTokenButton
+                                        isSelected={!selectedToken1.empty}
+                                        token={selectedToken1}
+                                        onClick={() => {
+                                            setIsSelectingToken1(true);
+                                            setShowModal(true);
+                                        }}
+                                    />
+                                </div>
+                            </Form.Group>
 
-                        {/* Token 2 selection with image and amount input */}
-                        <Form.Group className="mb-4">
-                            <div className="token-input-container" style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
-                                <Form.Control
-                                    type="text"
-                                    placeholder={`${outPutAmount}`}
-                                    value={amount2}
-                                    onChange={handleAmount2Change}
-                                    style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
-                                />
-                                <SelectTokenButton
-                                    isSelected={!selectedToken2.empty}
-                                    token={selectedToken2}
-                                    onClick={() => {
-                                        setIsSelectingToken1(false);
-                                        setShowModal(true);
+                            {/* Token 2 selection with image and amount input */}
+                            <Form.Group className="mb-4">
+                                <div
+                                    className="token-input-container"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '100%',
                                     }}
-                                /> 
-                                
-                            </div>
-                        </Form.Group>
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        onChange={handleAmount2Change}
+                                        style={{ fontSize: '1rem', padding: '1rem', flex: 1, marginRight: '10px' }}
+                                    />
+                                    <SelectTokenButton
+                                        isSelected={!selectedToken2.empty}
+                                        token={selectedToken2}
+                                        onClick={() => {
+                                            setIsSelectingToken1(false);
+                                            setShowModal(true);
+                                        }}
+                                    />
+                                </div>
+                            </Form.Group>
 
-                        {/* Swap Button */}
-                        {console.log('this is amount 1',amount1)}
-                        
-                        {connectionStatus === "connected" && amount1 === '' ? (
-                            <ConnectedButton/>
-                        ) : connectionStatus === "connected" && 
-                                amount1 !== '' && 
-                                selectedToken1.empty === true  ? (<ConnectedButton/>) : 
-                            connectionStatus === "connected" && amount1 !== '' && 
-                                selectedToken1.empty !== true && 
-                                selectedToken2.empty !== true ? (<ApproveButton 
-                                                                    tokenAddress = {selectedToken1.address}
-                                                                    amount = {amount1}
-                                                                    client={Client}
-                                                                    spender={Spender}
-                                                                    />) :
-                            connectionStatus === "connected" && amount1 !== '' && selectedToken1.empty !== true && selectedToken2.empty == true ? (<ConnectedButton/>) :
-                            (
-                            <ConnectWallet className="w-100" style={{ padding: '1rem', fontSize: '1.5rem' }} />
-                        )}
-                    </Form>
+                            {/* Center-aligned Swap Button */}
+                            <div className="d-flex justify-content-center">
+                            <div className='w-100'>
+                                <ConnectWalletButton
+                                addressToken1={selectedToken1.address}
+                                addressToken2={selectedToken2.address}
+                                amount={amount1}/>
+                               
+                            </div>
+                            </div>
+                        </Form>
+                    )}
                 </Card.Body>
-           </Card>
+            </Card>
 
             {/* Modal for token selection */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>

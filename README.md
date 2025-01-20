@@ -28,6 +28,15 @@ Reacts missing queryClient error fix
     https://github.com/thirdweb-dev/dashboard/issues/2084
     https://stackoverflow.com/questions/65590195/error-no-queryclient-set-use-queryclientprovider-to-set-one
 
+
+    # rract v4 docs
+
+    https://portal.thirdweb.com/react/v4/components/ConnectWallet
+
+    examples 
+
+    https://github.com/thirdweb-dev/react/blob/main/apps/example/pages/index.tsx
+
 disable cors in bravr browser:
     open -n -a /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser --args --user-data-dir="/tmp/brave_dev_sess_1" --disable-web-security
 
