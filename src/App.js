@@ -1,6 +1,6 @@
-
 import Client from './client.js';
 import { Container,Navbar} from 'react-bootstrap';
+import { base } from "thirdweb/chains";
 import SwapBox from "./components/swapBox.js";
 import Header from "./components/header.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +12,7 @@ dotenv.config();
 //const metamaskConfig = metamaskWallet();
 function App() {
   return (
+
     <div className="App"> 
     {/* Header*/}
       <Header/>

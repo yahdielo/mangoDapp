@@ -25,7 +25,7 @@ const tokens = [{empty:true},
     // Add more tokens as needed
 ];
 
-const SwapBox = () => {
+const SwapBox = ({Client, Spender}) => {
 
     const status = useConnectionStatus();
     const chain = useChain();

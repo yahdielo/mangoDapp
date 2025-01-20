@@ -1,6 +1,6 @@
 
 import { Button, Image } from 'react-bootstrap';
-const SelectTokenButton = ({ isSelected, token, onClick, style }) => {
+const SelectTokenButton = ({ isSelected, token, onClick}) => {
     return (
         <Button
             variant="outline-secondary"
